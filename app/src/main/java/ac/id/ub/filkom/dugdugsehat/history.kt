@@ -24,8 +24,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,7 +35,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ac.id.ub.filkom.dugdugsehat.viewModel.MainViewModel
+import android.util.Log
+import androidx.hilt.navigation.compose.hiltViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class history: ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +51,8 @@ class history: ComponentActivity(){
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = UserViewModel()
-                    Historyscreen(viewModel)
+//                    val viewModel = MainViewModel()
+                    Historyscreen()
                 }
             }
         }
@@ -55,9 +61,13 @@ class history: ComponentActivity(){
 
 @Composable
 fun Historyscreen(
-    viewModel: UserViewModel
+    viewModel: MainViewModel = hiltViewModel()
 ){
-    var email by remember { mutableStateOf(viewModel.email2) }
+    LaunchedEffect(viewModel.health.value) {
+        viewModel.getHealthData("tata12345@gmail.com", "6")
+    }
+    val health by viewModel.health
+    Log.i("healthapi", health?.data?.size.toString())
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
@@ -70,7 +80,7 @@ fun Historyscreen(
                     .padding(24.dp),
                 horizontalAlignment = Alignment.Start
 
-            ){
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -80,141 +90,52 @@ fun Historyscreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(start = mediumSpace, end = mediumSpace),
-                        text = email,
+                        text = "HISTORY",
                         style = Type.heading3Medium()
                     )
                 }
                 Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 75,
-                    cardColor = Primary50,
-                    contentColor = Primary600,
-                    cardTitle = stringResource(R.string.hr_card),
-                    unit = stringResource(R.string.hr_value),
-                    painter = painterResource(R.drawable.ic_heart_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 24,
-                    cardColor = Purple50,
-                    contentColor = Purple600,
-                    cardTitle = stringResource(R.string.ecg_card),
-                    unit = stringResource(R.string.ecg_value),
-                    painter = painterResource(R.drawable.ic_bolt_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 80,
-                    cardColor = Primary50,
-                    contentColor = Primary600,
-                    cardTitle = stringResource(R.string.hr_card),
-                    unit = stringResource(R.string.hr_value),
-                    painter = painterResource(R.drawable.ic_heart_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 27,
-                    cardColor = Purple50,
-                    contentColor = Purple600,
-                    cardTitle = stringResource(R.string.ecg_card),
-                    unit = stringResource(R.string.ecg_value),
-                    painter = painterResource(R.drawable.ic_bolt_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 78,
-                    cardColor = Primary50,
-                    contentColor = Primary600,
-                    cardTitle = stringResource(R.string.hr_card),
-                    unit = stringResource(R.string.hr_value),
-                    painter = painterResource(R.drawable.ic_heart_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 26,
-                    cardColor = Purple50,
-                    contentColor = Purple600,
-                    cardTitle = stringResource(R.string.ecg_card),
-                    unit = stringResource(R.string.ecg_value),
-                    painter = painterResource(R.drawable.ic_bolt_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 82,
-                    cardColor = Primary50,
-                    contentColor = Primary600,
-                    cardTitle = stringResource(R.string.hr_card),
-                    unit = stringResource(R.string.hr_value),
-                    painter = painterResource(R.drawable.ic_heart_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 28,
-                    cardColor = Purple50,
-                    contentColor = Purple600,
-                    cardTitle = stringResource(R.string.ecg_card),
-                    unit = stringResource(R.string.ecg_value),
-                    painter = painterResource(R.drawable.ic_bolt_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 79,
-                    cardColor = Primary50,
-                    contentColor = Primary600,
-                    cardTitle = stringResource(R.string.hr_card),
-                    unit = stringResource(R.string.hr_value),
-                    painter = painterResource(R.drawable.ic_heart_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
-                Spacer(modifier = Modifier.height(mediumSpace))
-                HrEcgCard(
-                    value = 30,
-                    cardColor = Purple50,
-                    contentColor = Purple600,
-                    cardTitle = stringResource(R.string.ecg_card),
-                    unit = stringResource(R.string.ecg_value),
-                    painter = painterResource(R.drawable.ic_bolt_icon),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = mediumSpace, end = mediumSpace)
-                )
+                health!!.data.forEach {
+                    if (it?.type == "hr") {
+                        // must be hr
+                        HrEcgCard(
+                            value = it.value!!,
+                            cardColor = Primary50,
+                            contentColor = Primary600,
+                            cardTitle = stringResource(R.string.hr_card),
+                            unit = stringResource(R.string.hr_value),
+                            painter = painterResource(R.drawable.ic_heart_icon),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = mediumSpace, end = mediumSpace)
+                        )
+                    } else if (it?.type == "ecg") {
+                        // must be ecg
+                        HrEcgCard(
+                            value = it.value!!,
+                            cardColor = Purple50,
+                            contentColor = Purple600,
+                            cardTitle = stringResource(R.string.ecg_card),
+                            unit = stringResource(R.string.ecg_value),
+                            painter = painterResource(R.drawable.ic_bolt_icon),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = mediumSpace, end = mediumSpace)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(mediumSpace))
+                }
             }
             Spacer(modifier = Modifier.height(100.dp))
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HistoryScreenPreview() {
-    DugDugSehatTheme {
-        val viewModel = UserViewModel()
-        Historyscreen(viewModel)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun HistoryScreenPreview() {
+//    DugDugSehatTheme {
+//        val viewModel = MainViewModel()
+//        Historyscreen(viewModel)
+//    }
+//}

@@ -69,7 +69,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import ac.id.ub.filkom.dugdugsehat.viewModel.MainViewModel
+    import ac.id.ub.filkom.dugdugsehat.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 

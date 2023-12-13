@@ -64,7 +64,7 @@ fun Navigation(navController: NavHostController) {
             }
             composable(route = Screen.HistoryScreen.route) {
                 val viewModel = it.sharedViewModel<UserViewModel>(navController = navController)
-                Historyscreen(viewModel)
+                Historyscreen()
             }
             composable(route = Screen.ProfileScreen.route){
                 ProfileScreen()
